@@ -1,0 +1,103 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  7                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+solvers
+{
+
+    p
+    {
+        solver          PBiCGStab;
+        preconditioner  DIC;
+        tolerance       1e-8;
+        relTol          0.01;
+	minIter 	2;
+    }
+
+    pFinal
+    {
+        $p;
+        relTol          0;
+	minIter 	2;
+    }
+
+/*
+    pcorr
+    {
+        $pFinal;
+        solver          PCG;
+        preconditioner  DIC;
+    }
+
+    pcorrFinal
+    {
+        $pcorr;
+        relTol          0;
+    }
+*/
+
+    U
+    {
+
+/*
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-6;
+        relTol          0;
+
+*/
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          0.01;
+	minIter 	2;
+    }
+
+    UFinal
+    {
+        $U;
+        tolerance       1e-8;
+        relTol          0;
+	minIter 	2;
+    }
+}
+
+PIMPLE
+{
+    momentumPredictor   true;
+    nOuterCorrectors    2;
+    nCorrectors         4;
+    nNonOrthogonalCorrectors 2;
+
+    //pRefCell 0; 
+    //pRefValue 0; 
+
+    correctPhi          false; 
+
+    ddtCorr             true;
+
+}
+
+relaxationFactors
+{
+    fields
+    {
+    }
+    equations
+    {
+        ".*"           1;
+    }
+}
+
+// ************************************************************************* //
