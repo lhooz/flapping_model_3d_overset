@@ -20,7 +20,7 @@ solvers
     {
         solver          PBiCGStab;
         preconditioner  DIC;
-        tolerance       1e-8;
+        tolerance       1e-12;
         relTol          0.01;
 	minIter 	2;
     }
@@ -59,7 +59,7 @@ solvers
 */
         solver          PBiCGStab;
         preconditioner  DILU;
-        tolerance       1e-8;
+        tolerance       1e-12;
         relTol          0.01;
 	minIter 	2;
     }
@@ -67,7 +67,6 @@ solvers
     UFinal
     {
         $U;
-        tolerance       1e-8;
         relTol          0;
 	minIter 	2;
     }
@@ -76,8 +75,8 @@ solvers
 PIMPLE
 {
     momentumPredictor   true;
-    nOuterCorrectors    2;
-    nCorrectors         4;
+    nOuterCorrectors    3;
+    nCorrectors         5;
     nNonOrthogonalCorrectors 2;
 
     //pRefCell 0; 

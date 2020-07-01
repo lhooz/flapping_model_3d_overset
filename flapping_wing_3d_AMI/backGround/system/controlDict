@@ -22,7 +22,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         20;
+endTime         80;
 
 deltaT          0.01;
 
@@ -45,7 +45,7 @@ timePrecision   6;
 runTimeModifiable true;
 
 adjustTimeStep  yes;
-maxCo           100;
+maxCo           0.9;
 maxDeltaT       0.1;
 
 // ************************************************************************* //
@@ -102,7 +102,7 @@ functions
 
 	//// Patches to sample
 	//patches ("body1" "body2" "body3");
-	patches ("wing");
+	patches (wing);
 
 	//// Name of fields
 	pName p;
@@ -143,13 +143,13 @@ functions
 	//// Dump to file
 	log true;
 
-	CofR (0.0 0 0);
-	liftDir (0 1 0);
+	CofR (0 0 0);
+	liftDir (0 0 1);
 	dragDir (1 0 0);
-	pitchAxis (0 0 1);
-	magUInf 0.2;
+	pitchAxis (0 1 0);
+	magUInf 0.8;
 	lRef 1.0;         // reference lenght for moments!!!
-	Aref 1.0;	//2.0;         // reference area 1 for 2d
+	Aref 3.0;	// reference area
 
         writeControl   timeStep;
         writeInterval  1;
