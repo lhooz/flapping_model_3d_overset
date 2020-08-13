@@ -1,0 +1,114 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  7                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    cellDisplacement
+    {
+        solver          PCG;
+        preconditioner  DIC;
+
+        tolerance       1e-06;
+        relTol          0;
+        maxIter         100;
+    }
+
+    cellDisplacementFinal
+    {
+        $cellDisplacement
+    }
+
+    p
+    {
+        solver          PBiCGStab;
+        preconditioner  DIC;
+        tolerance       1e-6;
+        relTol          0.1;
+	minIter 	2;
+    }
+
+    pFinal
+    {
+        $p;
+        relTol          0;
+    }
+
+    pcorr
+    {
+        $pFinal;
+        solver          PCG;
+        preconditioner  DIC;
+    }
+
+    pcorrFinal
+    {
+        $pcorr;
+        relTol          0;
+    }
+
+    U
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          0.0;
+	minIter 	2;
+    }
+
+    UFinal
+    {
+        $U;
+    }
+}
+
+PIMPLE
+{
+    momentumPredictor   true;
+    correctPhi          true;
+    nOuterCorrectors    10;
+    nCorrectors         3;
+    nNonOrthogonalCorrectors 2;
+
+    ddtCorr             true;
+
+    residualControl
+    {
+        U
+        {
+                tolerance  1e-7;
+                relTol      0;
+        }
+        p
+        {
+                tolerance  1e-5;
+                relTol      0;
+        }
+     }
+}
+
+/*
+relaxationFactors
+{
+    fields
+    {
+    }
+    equations
+    {
+        ".*"           1;
+    }
+}
+*/
+// ************************************************************************* //
