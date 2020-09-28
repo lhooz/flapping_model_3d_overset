@@ -16,6 +16,7 @@ foamCleanTutorials
 cd wing
 surfaceFeatureExtract
 blockMesh
+transformPoints -rollPitchYaw '(0 45 0)'
 snappyHexMesh -overwrite | tee log.snappyHexMesh
 cd ..
 

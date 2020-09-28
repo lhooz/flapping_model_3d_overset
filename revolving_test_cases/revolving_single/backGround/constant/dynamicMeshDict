@@ -17,25 +17,17 @@ FoamFile
 dynamicFvMesh       dynamicMotionSolverFvMesh;
 
 motionSolverLibs ( "libfvMotionSolvers.so" );
-//motionSolverLibs (fvMotionSolvers);
 
-motionSolver    solidBody;
+solver          multiSolidBodyMotionSolver;
 
-cellZone        movingZone;
+multiSolidBodyMotionSolverCoeffs
+{
+    movingZone
+    {
+        solidBodyMotionFunction tabulated6DoFMotion;
+        CofG         (0 0 0);
+        timeDataFileName "<constant>/6DoF_rev.dat";
+    }
+}
 
-solidBodyMotionFunction  rotatingMotion;
-
-origin      (0 0 0);
-axis        (1 0 0);
-omega       6.2832;
-/*
-omega       table
-(
-    (0    0)
-    (0.01  628)
-    (0.022  628)
-    (0.03  419)
-    (100   419)
-);
-*/
 // ************************************************************************* //

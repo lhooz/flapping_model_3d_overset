@@ -1,0 +1,31 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  7                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+ 
+forces_object
+{
+    type forces;
+    libs ("libforces.so");
+    patches (wing);
+
+    writeControl writeTime;
+	
+    //writeControl   timeStep;
+    //writeInterval  1;
+
+    //// Name of fields
+    pName    p;
+    UName    U;
+
+    //// Density
+    rho rhoInf;
+    rhoInf 1;
+
+    //// Centre of rotation
+    CofR (0 0 0);
+}
+
